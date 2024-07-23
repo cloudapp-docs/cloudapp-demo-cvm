@@ -1,5 +1,5 @@
 provider "tencentcloud" {
-  region = "ap-guangzhou"
+  region = var.app_target.region
 }
 
 # 声明随机密码（通过站内信发送密码内容）
@@ -11,7 +11,7 @@ resource "random_password" "common_random" {
 # CVM 实例
 resource "tencentcloud_instance" "demo_cvm" {
   # 可用区（例：广州六区）
-  availability_zone = "ap-guangzhou-6"
+  availability_zone = var.app_target.subnet.zone
 
   # 有效的 CVM 镜像ID，格式形如：img-xxx，公共镜像、自定义镜像、共享镜像的镜像ID可通过登录控制台查询
   image_id = "img-eb30mz89"
@@ -26,10 +26,10 @@ resource "tencentcloud_instance" "demo_cvm" {
   instance_type = "SA5.MEDIUM2"
 
   # VPC ID（替换成自己的 VPC ID）
-  vpc_id = "vpc-2hzy2z43"
+  vpc_id = var.app_target.vpc.id
 
   # 子网 ID（替换成自己的 子网ID）
-  subnet_id = "subnet-m0i6uiz8"
+  subnet_id = var.app_target.subnet.id
 
   # 实例密码（例：随机密码）
   password = random_password.common_random.result
