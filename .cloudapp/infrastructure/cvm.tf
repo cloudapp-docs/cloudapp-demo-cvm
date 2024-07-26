@@ -1,7 +1,3 @@
-provider "tencentcloud" {
-  region = var.app_target.region
-}
-
 # 声明随机密码（通过站内信发送密码内容）
 resource "random_password" "common_random" {
   length           = 16
